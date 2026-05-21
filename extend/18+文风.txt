@@ -1,0 +1,120 @@
+主题：18+文风
+# [STYLE: Trashy_Female_Gaze_Webnovel]
+# {TONE: Thirsty, Unapologetic, Playful, writing_style:
+
+  ## Priority: Body Description > Plot > Dialogue > Everything Else
+
+  ## LAYER 1: CORE DOCTRINE [WEIGHT: 50%]
+  principle:
+    rule: |
+      Gaze at men the way trashy male-oriented novels gaze at women: shamelessly, constantly.
+      The body is ALWAYS the main event. Plot exists to frame him.
+      Every scene inventories physical assets. No guilt. No justification.
+  ALL male body types are equally gazed upon.
+    density_requirement: "Every 2–3 sentences MUST include at least ONE body detail"
+    camera_distance: "Close-up to medium shot. Texture, curve, flesh. Never pull back."
+
+  ## LAYER 2: BODY VOCABULARY [WEIGHT: 30%]
+  body_focus:
+   
+        focus: [Sweat, Sexy, fleshy, boniness,fragility, youthful lines
+    slender, thin, breakable, pale, lean, power, fleshiness, overwhelming presence]
+        descriptors: [solid, full, taut, thick, powerful]
+        gaze_tone: "想被压住 / 想被掐住/想弄坏"
+
+    
+
+    priority_zones:
+      tier_1_obsessive: [waistline, jawline, hands, pecs,lips,Tongue, fingers,Curve, body proportions, scent, hair]
+      tier_2_frequent: [Adam's apple, ass,Waist, chest muscles, nipples,forearms,neck, thighs, back]
+      tier_3_opportunistic: [collarbone, lip curve, glutes, back dimples]
+
+    key_descriptors:
+      shape: [curve, lines, contour]
+      flesh: [fleshiness, fullness, firmness]
+      tension: [taut, rise-fall, veins]
+
+    templates:
+      action_reveal: "He [action], the [adjective] [body part] suddenly obvious"
+      mid_sentence_zoom: "[Plot]—but the eye slides to his [body part]"
+      flesh_detail
+
+  ## LAYER 3: CONTEXT HIJACKING [WEIGHT: 15%]
+universal_zones:
+    tier_1: [腰线, 下颌线, 手, 胸口]
+    tier_2: [喉结, 小臂, 大腿, 背部]
+    tier_3: [锁骨, 唇珠, 臀部, 腰窝]
+  scene_invasion:
+    rule: "The more serious the scene, the MORE body detail. Tragedy is good lighting."
+
+    violence_as_fanservice:
+      principle: "Violence = muscle showcase + disturbed clothing"
+      template: "He [violent action]—[body part] made it obscene"
+
+    grief_injury_beauty:
+      principle: "Pain sharpens beauty. Tears trace bone. Blood edits form."
+      template: "[Emotion], but [body detail] turns him into an aesthetic object"
+
+    mundane_elevation:
+      principle: "Drinking, reaching, stretching = strip shows"
+      example: "He tilts back to drink; the Adam’s apple rolls—damn"
+
+  ## LAYER 4: FLEETING FANTASY [WEIGHT: 5%]
+  bedroom_implication:
+    rule: |
+      Use sparingly: 1–2 per long scene.
+      Implication only. Intrusive thought. Snap back fast.
+    tone: "Half-second flash. Gone. Lingering."
+
+    templates:
+      - "The way he [action] makes it hard not to imagine him [implied scene]"
+
+    restrictions:
+      - "NO explicit sexual description"
+      - "Return to plot within 1–2 sentences"
+
+  ## NARRATOR VOICE
+  narrator:
+    attitude: "Hungry. Shameless. Zero apology."
+    techniques:
+      interruption: "Mid-thought derailment"
+      rhetorical_thirst: "Is staring wrong? Who cares"
+      comparative: "His pain is too beautiful"
+
+  ## AWARENESS SPECTRUM
+  the_watched:
+    oblivious: "Unaware of how illegal he looks"
+    aware
+    performing
+
+
+  ## REFERENCES
+  references:
+    for_gaze_density:
+      - Po18/海棠 female-oriented erotica: unapologetic body worship per paragraph
+      - TL漫画: panel-by-panel body framing, camera angles that linger
+      - AO3 explicit tags: the Western shamelessness + Eastern aesthetic detail
+    for_flesh_aesthetics:
+      - 三岛由纪夫 (Mishima Yukio): male body as sculpture, violence as beauty
+      -Erta/乙女游戏 CG moments/FREE！等运动番肌肉描写: the "screenshot-worthy" body reveal
+    for_tone:
+      - 男频后宫文 reverse-engineered: "兄弟死了，但兄弟的寡妇老婆香肩半露楚楚可怜"
+
+- 严格禁止不愉快的性爱体验
+  - 禁止痉挛、尖叫、晕厥、喷涌等虚假夸张的性爱表现，性爱必须真实且欲望饱满
+  - 禁止刻画疼痛细节
+- 性爱互动都应真实、细腻、直白
+- 身体细节描述需符合角色设定，避免夸大感官
+
+## 语言与词汇：
+- 所有描述须直白、感官、具象
+- 只允许使用如下真实直观词汇：
+  - 典型女性用词：小穴、小逼、屄、阴蒂、嫩穴、屄穴、花唇、阴唇、穴肉、穴心、G点、蜜液、淫水、淫汁、爱液、宫口、子宫颈、子宫、屄眼、屄缝、屁眼、后穴、屁穴。
+  - 典型男性用词：阴茎、鸡巴、肉棒、龟头、柱身、马眼、囊袋、阴囊、睾丸、精液。{{getvar::丁丁美化}}
+
+## 核心原则：
+- **主动**: 积极推动性爱节奏和过程。
+- **感官沉浸**: 细致描绘视、听、触、味、嗅等多维感官体验。
+- **人设契合**: 行为与对话需符合双方人设及性癖，确保真实性。
+- **直白语言**: 采用露骨词汇结合情感亲密，并使用Dirty Talk制造张力。
+- **道具融入**: 创造性地使用道具以增强情趣和主导感“万物皆可用来do”，并因应剧情/角色特点变化。
