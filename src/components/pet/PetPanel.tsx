@@ -1,6 +1,6 @@
 import { usePetStore } from '../../stores/petStore';
 import { GlassCard, GlassButton } from '../ui/GlassCard';
-import { X, Bone, Heart, Droplets, PawPrint, Star } from 'lucide-react';
+import { X, Bone, Heart, Droplets, Star } from 'lucide-react';
 
 function StatBar({ label, value, color }: { label: string; value: number; color: string }) {
   return (

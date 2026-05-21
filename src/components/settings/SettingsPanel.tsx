@@ -4,7 +4,7 @@ import { useChatStore } from '../../stores/chatStore';
 import { useStoryStore } from '../../stores/storyStore';
 import { usePetStore } from '../../stores/petStore';
 import { GlassCard, GlassButton } from '../ui/GlassCard';
-import { Eye, EyeOff, RefreshCw, Sun, Moon, Trash2 } from 'lucide-react';
+import { Eye, EyeOff, RefreshCw, Sun, Moon, Trash2, Loader2 } from 'lucide-react';
 
 export function SettingsPanel() {
   const {

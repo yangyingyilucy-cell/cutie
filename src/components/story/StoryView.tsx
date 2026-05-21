@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useStoryStore } from '../../stores/storyStore';
 import { useSettingsStore } from '../../stores/settingsStore';
 import { usePetStore } from '../../stores/petStore';
