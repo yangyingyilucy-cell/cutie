@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { usePetStore } from '../../stores/petStore';
 import { PetPanel } from './PetPanel';
 
@@ -18,6 +18,7 @@ export function PetFloating() {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [hasMoved, setHasMoved] = useState(false);
+  const dragRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     tick();
@@ -29,45 +30,69 @@ export function PetFloating() {
     sessionStorage.setItem('pet-position', JSON.stringify(position));
   }, [position]);
 
+  const clampPosition = useCallback(
+    (x: number, y: number) => ({
+      x: Math.max(0, Math.min(x, window.innerWidth - 56)),
+      y: Math.max(0, Math.min(y, window.innerHeight - 56)),
+    }),
+    [],
+  );
+
+  const startDrag = useCallback(
+    (clientX: number, clientY: number) => {
+      setIsDragging(true);
+      setHasMoved(false);
+      setDragStart({ x: clientX - position.x, y: clientY - position.y });
+    },
+    [position],
+  );
+
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
-      setIsDragging(true);
-      setHasMoved(false);
-      setDragStart({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
-      });
+      startDrag(e.clientX, e.clientY);
     },
-    [position],
+    [startDrag],
+  );
+
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      const touch = e.touches[0];
+      startDrag(touch.clientX, touch.clientY);
+    },
+    [startDrag],
   );
 
   useEffect(() => {
     if (!isDragging) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const newX = e.clientX - dragStart.x;
-      const newY = e.clientY - dragStart.y;
+    const move = (clientX: number, clientY: number) => {
+      const newX = clientX - dragStart.x;
+      const newY = clientY - dragStart.y;
       if (Math.abs(newX - position.x) > 3 || Math.abs(newY - position.y) > 3) {
         setHasMoved(true);
       }
-      setPosition({
-        x: Math.max(0, Math.min(newX, window.innerWidth - 56)),
-        y: Math.max(0, Math.min(newY, window.innerHeight - 56)),
-      });
+      setPosition(clampPosition(newX, newY));
     };
 
-    const handleMouseUp = () => {
-      setIsDragging(false);
+    const handleMouseMove = (e: MouseEvent) => move(e.clientX, e.clientY);
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      move(e.touches[0].clientX, e.touches[0].clientY);
     };
+    const end = () => setIsDragging(false);
 
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mouseup', end);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', end);
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mouseup', end);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', end);
     };
-  }, [isDragging, dragStart, position]);
+  }, [isDragging, dragStart, position, clampPosition]);
 
   const handleClick = () => {
     if (hasMoved) return;
@@ -92,15 +117,17 @@ export function PetFloating() {
         </div>
       )}
       <button
+        ref={dragRef}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         onClick={handleClick}
-        className="fixed z-40 w-14 h-14 rounded-full pet-gradient text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 cursor-grab active:cursor-grabbing select-none"
+        className="fixed z-40 w-12 h-12 md:w-14 md:h-14 rounded-full pet-gradient text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 cursor-grab active:cursor-grabbing select-none"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
         }}
       >
-        <span className="text-2xl pointer-events-none">{stageEmoji}</span>
+        <span className="text-2xl md:text-2xl text-xl pointer-events-none">{stageEmoji}</span>
         {needsAttention && (
           <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-400 rounded-full flex items-center justify-center text-[10px] animate-pulse pointer-events-none">
             !

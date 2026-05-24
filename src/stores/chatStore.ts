@@ -12,8 +12,12 @@ interface ChatStore {
 
   getActiveConversation: () => Conversation | undefined;
   setActiveCharacter: (characterId: string) => void;
+  setActiveConversation: (convId: string) => void;
   clearConversation: (characterId: string) => void;
+  clearCurrentConversation: () => void;
+  createNewConversation: (characterId: string) => string;
   addMessage: (role: 'user' | 'assistant', content: string) => void;
+  deleteMessage: (msgId: string) => void;
   setStreaming: (streaming: boolean) => void;
   setStreamContent: (content: string) => void;
   appendStreamContent: (chunk: string) => void;
@@ -57,12 +61,50 @@ export const useChatStore = create<ChatStore>()(
         });
       },
 
+      setActiveConversation: (convId) => {
+        const conv = get().conversations.find((c) => c.id === convId);
+        if (conv) {
+          set({
+            activeConversationId: convId,
+            activeCharacterId: conv.characterId,
+          });
+        }
+      },
+
       clearConversation: (characterId) => {
         const { conversations } = get();
         const filtered = conversations.filter(
           (c) => !(c.characterId === characterId && c.messages.length > 0),
         );
         set({ conversations: filtered });
+      },
+
+      clearCurrentConversation: () => {
+        const { conversations, activeConversationId } = get();
+        if (!activeConversationId) return;
+        set({
+          conversations: conversations.map((c) =>
+            c.id === activeConversationId
+              ? { ...c, messages: [], updatedAt: Date.now() }
+              : c,
+          ),
+        });
+      },
+
+      createNewConversation: (characterId) => {
+        const conv: Conversation = {
+          id: uuidv4(),
+          characterId,
+          messages: [],
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+        };
+        set({
+          conversations: [...get().conversations, conv],
+          activeConversationId: conv.id,
+          activeCharacterId: characterId,
+        });
+        return conv.id;
       },
 
       addMessage: (role, content) => {
@@ -80,6 +122,21 @@ export const useChatStore = create<ChatStore>()(
             return {
               ...c,
               messages: [...c.messages, newMsg],
+              updatedAt: Date.now(),
+            };
+          }),
+        });
+      },
+
+      deleteMessage: (msgId) => {
+        const { conversations, activeConversationId } = get();
+        if (!activeConversationId) return;
+        set({
+          conversations: conversations.map((c) => {
+            if (c.id !== activeConversationId) return c;
+            return {
+              ...c,
+              messages: c.messages.filter((m) => m.id !== msgId),
               updatedAt: Date.now(),
             };
           }),

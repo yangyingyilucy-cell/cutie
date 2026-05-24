@@ -14,6 +14,7 @@ interface StoryStore {
   createStory: (title: string, background: string, protagonist: string, conflict: string, writingStyle: string) => string;
   addChapter: (chapter: Chapter) => void;
   setWritingStyle: (storyId: string, style: string) => void;
+  setStorySettings: (storyId: string, settings: Partial<Pick<Story, 'userCharacter' | 'viewpoint' | 'wordCount' | 'outputFormat'>>) => void;
   setGenerating: (generating: boolean) => void;
   setGeneratedOptions: (options: StoryOption[]) => void;
   setStoryStreamContent: (content: string) => void;
@@ -48,6 +49,10 @@ export const useStoryStore = create<StoryStore>()(
           protagonist,
           conflict,
           writingStyle,
+          userCharacter: '',
+          viewpoint: 'third',
+          wordCount: 800,
+          outputFormat: '',
           chapters: [],
           createdAt: Date.now(),
           updatedAt: Date.now(),
@@ -75,6 +80,14 @@ export const useStoryStore = create<StoryStore>()(
         set({
           stories: get().stories.map((s) =>
             s.id === storyId ? { ...s, writingStyle } : s,
+          ),
+        });
+      },
+
+      setStorySettings: (storyId, settings) => {
+        set({
+          stories: get().stories.map((s) =>
+            s.id === storyId ? { ...s, ...settings } : s,
           ),
         });
       },

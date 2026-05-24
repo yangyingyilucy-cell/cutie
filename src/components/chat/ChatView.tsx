@@ -7,7 +7,7 @@ import { streamChat } from '../../services/api';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 import { PersonalitySelector } from './PersonalitySelector';
-import { Sidebar } from 'lucide-react';
+import { Sidebar, Plus, Trash2 } from 'lucide-react';
 
 export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   const [inputValue, setInputValue] = useState('');
@@ -22,6 +22,10 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 
   const activeConv = chatStore.getActiveConversation();
   const activeChar = characters.find((c) => c.id === chatStore.activeCharacterId);
+  const isFirstMessage = activeConv ? activeConv.messages.length === 0 : true;
+  const conversations = chatStore.activeCharacterId
+    ? chatStore.getConversationsByCharacter(chatStore.activeCharacterId)
+    : [];
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -51,6 +55,8 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
     const conv = chatStore.getActiveConversation();
     if (!conv) return;
 
+    const isFirst = conv.messages.length === 0;
+
     chatStore.addMessage('user', trimmed);
     setInputValue('');
 
@@ -60,10 +66,21 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
     const char = characters.find((c) => c.id === chatStore.activeCharacterId);
     const systemMsg = char?.systemPrompt.replace(/\{\{user\}\}/g, '用户') || '';
 
+    const updatedConv = chatStore.getActiveConversation();
     const messages = [
       { role: 'system' as const, content: systemMsg, id: 'system', timestamp: 0 },
-      ...conv.messages,
     ];
+
+    if (isFirst) {
+      messages.push({
+        role: 'user' as const,
+        content: '以上是我希望你扮演的角色设定。以下是我对你说的第一句话，请严格按照角色设定回应我。',
+        id: 'separator',
+        timestamp: 0,
+      });
+    }
+
+    messages.push(...(updatedConv?.messages || []));
 
     chatStore.setStreaming(true);
     chatStore.setStreamContent('');
@@ -88,9 +105,13 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
     chatStore.finishStream();
   };
 
+  const handleDeleteMessage = (msgId: string) => {
+    chatStore.deleteMessage(msgId);
+  };
+
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center gap-3 p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
+      <div className="flex items-center gap-2 md:gap-3 p-2 md:p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] flex-wrap">
         <button
           onClick={onToggleSidebar}
           className="opacity-50 hover:opacity-80 cursor-pointer"
@@ -101,11 +122,30 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
           selectedId={chatStore.activeCharacterId || ''}
           onSelectWithContext={handleSwitchPersonality}
         />
+        <div className="flex items-center gap-1 ml-auto">
+          <button
+            onClick={() => chatStore.clearCurrentConversation()}
+            disabled={!activeConv || activeConv.messages.length === 0}
+            className="text-xs px-2 py-1 rounded-[8px] opacity-50 hover:opacity-80 cursor-pointer disabled:opacity-20 disabled:cursor-not-allowed hover:bg-[var(--color-bg-light)] dark:hover:bg-[var(--color-bg-dark)]"
+            title="清除当前对话"
+          >
+            <Trash2 size={14} />
+          </button>
+          <button
+            onClick={() =>
+              chatStore.createNewConversation(chatStore.activeCharacterId || '')
+            }
+            className="text-xs px-2 py-1 rounded-[8px] opacity-50 hover:opacity-80 cursor-pointer hover:bg-[var(--color-bg-light)] dark:hover:bg-[var(--color-bg-dark)]"
+            title="开启新对话"
+          >
+            <Plus size={14} />
+          </button>
+        </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-3 md:p-4">
         {activeChar && (
-          <div className="text-center mb-4 opacity-50 text-sm">
+          <div className="text-center mb-3 md:mb-4 opacity-50 text-xs md:text-sm">
             正在与 <span className="font-medium">{activeChar.name}</span> 对话
           </div>
         )}
@@ -113,11 +153,12 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
           messages={activeConv?.messages || []}
           streamContent={chatStore.streamContent}
           isStreaming={chatStore.isStreaming}
+          onDeleteMessage={handleDeleteMessage}
         />
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-3 border-t border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
+      <div className="p-2 md:p-3 border-t border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
         <ChatInput
           value={inputValue}
           onChange={setInputValue}

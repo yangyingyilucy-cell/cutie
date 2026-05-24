@@ -6,10 +6,21 @@ import { SettingsPanel } from '../settings/SettingsPanel';
 import { PetFloating } from '../pet/PetFloating';
 import { useSettingsStore } from '../../stores/settingsStore';
 
+function useIsMobile() {
+  const [mobile, setMobile] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
+    const handler = () => setMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return mobile;
+}
+
 export function Layout({ initialModule = 'chat' }: { initialModule?: 'chat' | 'story' }) {
   const theme = useSettingsStore((s) => s.theme);
   const [activePanel, setActivePanel] = useState<PanelView>(initialModule);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setActivePanel(initialModule);
@@ -20,6 +31,7 @@ export function Layout({ initialModule = 'chat' }: { initialModule?: 'chat' | 's
   }, [theme]);
 
   const handleToggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const handleCloseSidebar = () => setSidebarOpen(false);
 
   const renderPanel = () => {
     switch (activePanel) {
@@ -46,11 +58,23 @@ export function Layout({ initialModule = 'chat' }: { initialModule?: 'chat' | 's
 
   return (
     <div className="h-screen flex overflow-hidden">
-      {sidebarOpen && (
+      {isMobile ? (
+        sidebarOpen && (
+          <Sidebar
+            active={activePanel}
+            onSelect={setActivePanel}
+            onHome={() => window.location.reload()}
+            isMobile={true}
+            onClose={handleCloseSidebar}
+          />
+        )
+      ) : (
         <Sidebar
           active={activePanel}
           onSelect={setActivePanel}
           onHome={() => window.location.reload()}
+          isMobile={false}
+          onClose={handleCloseSidebar}
         />
       )}
       <div className="flex-1 flex flex-col overflow-hidden">{renderPanel()}</div>

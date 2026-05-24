@@ -47,6 +47,10 @@ export interface Story {
   protagonist: string;
   conflict: string;
   writingStyle: string;
+  userCharacter: string;
+  viewpoint: 'first' | 'third';
+  wordCount: number;
+  outputFormat: string;
   chapters: Chapter[];
   createdAt: number;
   updatedAt: number;
