@@ -7,6 +7,7 @@ import { streamChat } from '../../services/api';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 import { PersonalitySelector } from './PersonalitySelector';
+import type { ChatMessage } from '../../types';
 import { Sidebar, Plus, Trash2 } from 'lucide-react';
 
 export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
@@ -22,10 +23,6 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 
   const activeConv = chatStore.getActiveConversation();
   const activeChar = characters.find((c) => c.id === chatStore.activeCharacterId);
-  const isFirstMessage = activeConv ? activeConv.messages.length === 0 : true;
-  const conversations = chatStore.activeCharacterId
-    ? chatStore.getConversationsByCharacter(chatStore.activeCharacterId)
-    : [];
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -67,7 +64,7 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
     const systemMsg = char?.systemPrompt.replace(/\{\{user\}\}/g, '用户') || '';
 
     const updatedConv = chatStore.getActiveConversation();
-    const messages = [
+    const messages: ChatMessage[] = [
       { role: 'system' as const, content: systemMsg, id: 'system', timestamp: 0 },
     ];
 

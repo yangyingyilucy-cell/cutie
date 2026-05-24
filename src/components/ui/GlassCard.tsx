@@ -16,12 +16,14 @@ export function GlassButton({
   disabled = false,
   variant = 'accent',
   className = '',
+  type,
 }: {
   children: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
   variant?: 'accent' | 'ghost' | 'danger';
   className?: string;
+  type?: 'button' | 'submit' | 'reset';
 }) {
   const base =
     'px-4 py-2 rounded-[12px] font-medium transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed';
@@ -35,6 +37,7 @@ export function GlassButton({
 
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className={`${base} ${variants[variant]} ${className}`}
