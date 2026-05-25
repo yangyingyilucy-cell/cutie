@@ -17,7 +17,7 @@ function useIsMobile() {
   return mobile;
 }
 
-export function Layout({ initialModule = 'chat' }: { initialModule?: 'chat' | 'story' }) {
+export function Layout({ initialModule = 'chat' }: { initialModule?: PanelView }) {
   const theme = useSettingsStore((s) => s.theme);
   const [activePanel, setActivePanel] = useState<PanelView>(initialModule);
   const [sidebarOpen, setSidebarOpen] = useState(false);
