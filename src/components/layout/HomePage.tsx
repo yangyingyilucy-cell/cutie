@@ -1,4 +1,4 @@
-import { MessagesSquare, BookOpen, Bookmark, Settings } from 'lucide-react';
+import { MessagesSquare, BookOpen, Cloud, Settings } from 'lucide-react';
 import { PetFloating } from '../pet/PetFloating';
 import type { PanelView } from './Sidebar';
 
@@ -29,7 +29,7 @@ export function HomePage({ onEnter }: { onEnter: (module: PanelView) => void }) 
           onClick={() => onEnter('diary')}
           className="w-[100px] h-[100px] md:w-[140px] md:h-[140px] rounded-[16px] md:rounded-[20px] glass-card flex flex-col items-center justify-center gap-2 md:gap-3 hover:scale-105 transition-all duration-200 cursor-pointer group"
         >
-          <Bookmark size={32} className="md:size-10 opacity-60 group-hover:opacity-100 transition-opacity" />
+          <Cloud size={32} className="md:size-10 opacity-60 group-hover:opacity-100 transition-opacity" />
           <span className="text-xs md:text-sm font-medium opacity-70 group-hover:opacity-100">记忆</span>
         </button>
         <button

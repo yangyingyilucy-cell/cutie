@@ -9,7 +9,7 @@ import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 import { PersonalitySelector } from './PersonalitySelector';
 import type { ChatMessage } from '../../types';
-import { Sidebar, Plus, Trash2 } from 'lucide-react';
+import { Menu, Plus, Trash2 } from 'lucide-react';
 
 export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   const [inputValue, setInputValue] = useState('');
@@ -120,13 +120,24 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center gap-2 md:gap-3 p-2 md:p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] flex-wrap">
+    <div className="flex flex-col h-full relative">
+      {settings.backgroundImage && (
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url(${settings.backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+          }}
+        />
+      )}
+      <div className="flex items-center gap-2 md:gap-3 p-2 md:p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] flex-wrap relative z-10 bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)]">
         <button
           onClick={onToggleSidebar}
-          className="opacity-50 hover:opacity-80 cursor-pointer"
+          className="opacity-50 hover:opacity-80 cursor-pointer md:hidden"
         >
-          <Sidebar size={20} />
+          <Menu size={20} />
         </button>
         <PersonalitySelector
           selectedId={chatStore.activeCharacterId || ''}
@@ -154,21 +165,12 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
       </div>
 
       <div
-        className="flex-1 overflow-y-auto p-3 md:p-4 relative"
-        style={
+        className={`flex-1 overflow-y-auto p-3 md:p-4 relative z-10 ${
           settings.backgroundImage
-            ? {
-                backgroundImage: `url(${settings.backgroundImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              }
-            : undefined
-        }
+            ? 'bg-[var(--color-bg-light)]/70 dark:bg-[var(--color-bg-dark)]/70'
+            : ''
+        }`}
       >
-        {settings.backgroundImage && (
-          <div className="absolute inset-0 bg-[var(--color-bg-light)]/70 dark:bg-[var(--color-bg-dark)]/70 backdrop-blur-sm" />
-        )}
         <div className="relative z-10">
         {activeChar && (
           <div className="text-center mb-3 md:mb-4 opacity-50 text-xs md:text-sm">
@@ -185,7 +187,7 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
         </div>
       </div>
 
-      <div className="p-2 md:p-3 border-t border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
+      <div className="p-2 md:p-3 border-t border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] relative z-10 bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)]">
         <ChatInput
           value={inputValue}
           onChange={setInputValue}

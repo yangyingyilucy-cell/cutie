@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Sidebar, type PanelView } from './Sidebar';
+import { Menu } from 'lucide-react';
 import { ChatView } from '../chat/ChatView';
 import { StoryView } from '../story/StoryView';
 import { DiaryView } from '../diary/DiaryView';
@@ -46,8 +47,8 @@ export function Layout({ initialModule = 'chat' }: { initialModule?: PanelView }
         return (
           <div className="flex flex-col h-full">
             <div className="flex items-center gap-3 p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
-              <button onClick={handleToggleSidebar} className="opacity-50 hover:opacity-80 cursor-pointer">
-                <span className="text-lg">☰</span>
+              <button onClick={handleToggleSidebar} className="opacity-50 hover:opacity-80 cursor-pointer md:hidden">
+                <Menu size={20} />
               </button>
               <span className="font-medium text-sm">设置</span>
             </div>

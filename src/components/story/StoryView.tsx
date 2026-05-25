@@ -9,7 +9,7 @@ import { ChapterView } from './ChapterView';
 import { Timeline } from './Timeline';
 import { StorySettingsPanel } from './StorySettings';
 import { GlassCard } from '../ui/GlassCard';
-import { Sidebar, BookOpen, Palette, List, Settings2 } from 'lucide-react';
+import { Menu, BookOpen, Palette, List, Settings2 } from 'lucide-react';
 
 const BASE_SYSTEM_PROMPT = `你是一位专业的小说作家，擅长和用户共同创作故事。
 
@@ -150,8 +150,8 @@ export function StoryView({ onToggleSidebar }: { onToggleSidebar: () => void }) 
     return (
       <div className="flex flex-col h-full">
         <div className="flex items-center gap-3 p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
-          <button onClick={onToggleSidebar} className="opacity-50 hover:opacity-80 cursor-pointer">
-            <Sidebar size={20} />
+          <button onClick={onToggleSidebar} className="opacity-50 hover:opacity-80 cursor-pointer md:hidden">
+            <Menu size={20} />
           </button>
           <BookOpen size={20} className="opacity-50" />
           <span className="font-medium text-sm">故事生成器</span>
@@ -211,8 +211,8 @@ export function StoryView({ onToggleSidebar }: { onToggleSidebar: () => void }) 
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-2 md:gap-3 p-2 md:p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] flex-wrap">
-        <button onClick={onToggleSidebar} className="opacity-50 hover:opacity-80 cursor-pointer">
-          <Sidebar size={20} />
+        <button onClick={onToggleSidebar} className="opacity-50 hover:opacity-80 cursor-pointer md:hidden">
+          <Menu size={20} />
         </button>
         <BookOpen size={18} className="opacity-50 hidden md:block" />
         <span className="font-medium text-xs md:text-sm truncate max-w-[100px] md:max-w-[200px]">{activeStory.title}</span>
