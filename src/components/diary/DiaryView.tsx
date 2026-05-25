@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDiaryStore } from '../../stores/diaryStore';
 import { DiaryEditor } from './DiaryEditor';
-import { Plus, ChevronLeft, ChevronRight, Edit3, Trash2 } from 'lucide-react';
+import { Plus, ChevronLeft, ChevronRight, Edit3, Trash2, Menu } from 'lucide-react';
 
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
@@ -9,7 +9,7 @@ function formatDate(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-export function DiaryView() {
+export function DiaryView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string>(formatDate(new Date()));
   const [showEditor, setShowEditor] = useState(false);
@@ -218,7 +218,11 @@ export function DiaryView() {
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center justify-between p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] shrink-0">
-        <span className="font-medium text-sm">记忆日志</span>
+        <button onClick={onToggleSidebar} className="opacity-50 hover:opacity-80 cursor-pointer md:hidden">
+          <Menu size={20} />
+        </button>
+        <span className="font-medium text-sm">记忆</span>
+        <div className="w-5 md:hidden" />
       </div>
 
       {/* Main content: desktop = left/right, mobile = top/bottom */}

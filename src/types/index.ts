@@ -32,6 +32,7 @@ export interface Settings {
   model: string;
   theme: 'light' | 'dark';
   models: ModelInfo[];
+  backgroundImage: string | null;
 }
 
 export interface Chapter {

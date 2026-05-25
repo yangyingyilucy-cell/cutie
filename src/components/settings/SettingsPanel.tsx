@@ -4,7 +4,7 @@ import { useChatStore } from '../../stores/chatStore';
 import { useStoryStore } from '../../stores/storyStore';
 import { usePetStore } from '../../stores/petStore';
 import { GlassCard, GlassButton } from '../ui/GlassCard';
-import { Eye, EyeOff, RefreshCw, Sun, Moon, Trash2, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, RefreshCw, Sun, Moon, Trash2, Loader2, Upload, X } from 'lucide-react';
 
 export function SettingsPanel() {
   const {
@@ -15,10 +15,12 @@ export function SettingsPanel() {
     models,
     fetchingModels,
     modelError,
+    backgroundImage,
     setApiKey,
     setApiBaseUrl,
     setModel,
     setTheme,
+    setBackgroundImage,
     refreshModels,
     setModels,
   } = useSettingsStore();
@@ -56,6 +58,20 @@ export function SettingsPanel() {
       localStorage.removeItem('cutie-pet-state');
       window.location.reload();
     }
+  };
+
+  const handleBackgroundUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      alert('图片大小不能超过 2MB');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setBackgroundImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -156,6 +172,40 @@ export function SettingsPanel() {
           >
             <Moon size={16} /> 深色
           </button>
+        </div>
+      </GlassCard>
+
+      <GlassCard>
+        <h3 className="text-sm font-semibold mb-3 opacity-70">聊天背景</h3>
+        <div className="flex flex-col gap-2">
+          {backgroundImage && (
+            <div className="relative rounded-[12px] overflow-hidden">
+              <img
+                src={backgroundImage}
+                alt="聊天背景"
+                className="w-full h-32 object-cover rounded-[12px] opacity-60"
+              />
+              <button
+                onClick={() => setBackgroundImage(null)}
+                className="absolute top-2 right-2 w-6 h-6 bg-red-400 rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-red-500"
+              >
+                <X size={12} />
+              </button>
+            </div>
+          )}
+          <label className="flex items-center gap-2 px-4 py-2.5 rounded-[12px] cursor-pointer opacity-60 hover:opacity-100 transition-all border border-dashed border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
+            <Upload size={14} />
+            <span className="text-xs">
+              {backgroundImage ? '更换背景图片' : '上传背景图片'}
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleBackgroundUpload}
+              className="hidden"
+            />
+          </label>
+          <p className="text-[10px] opacity-30">支持 JPG/PNG，文件不超过 2MB。聊天界面将显示为磨砂玻璃效果。</p>
         </div>
       </GlassCard>
 

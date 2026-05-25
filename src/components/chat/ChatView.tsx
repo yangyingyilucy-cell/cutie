@@ -153,7 +153,23 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-3 md:p-4">
+      <div
+        className="flex-1 overflow-y-auto p-3 md:p-4 relative"
+        style={
+          settings.backgroundImage
+            ? {
+                backgroundImage: `url(${settings.backgroundImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }
+            : undefined
+        }
+      >
+        {settings.backgroundImage && (
+          <div className="absolute inset-0 bg-[var(--color-bg-light)]/70 dark:bg-[var(--color-bg-dark)]/70 backdrop-blur-sm" />
+        )}
+        <div className="relative z-10">
         {activeChar && (
           <div className="text-center mb-3 md:mb-4 opacity-50 text-xs md:text-sm">
             正在与 <span className="font-medium">{activeChar.name}</span> 对话
@@ -166,6 +182,7 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
           onDeleteMessage={handleDeleteMessage}
         />
         <div ref={messagesEndRef} />
+        </div>
       </div>
 
       <div className="p-2 md:p-3 border-t border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">

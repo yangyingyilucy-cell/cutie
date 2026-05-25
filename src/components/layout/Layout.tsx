@@ -41,7 +41,7 @@ export function Layout({ initialModule = 'chat' }: { initialModule?: PanelView }
       case 'story':
         return <StoryView onToggleSidebar={handleToggleSidebar} />;
       case 'diary':
-        return <DiaryView />;
+        return <DiaryView onToggleSidebar={handleToggleSidebar} />;
       case 'settings':
         return (
           <div className="flex flex-col h-full">

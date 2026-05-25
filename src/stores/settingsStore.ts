@@ -9,6 +9,7 @@ interface SettingsStore extends Settings {
   setModel: (model: string) => void;
   setTheme: (theme: 'light' | 'dark') => void;
   setModels: (models: ModelInfo[]) => void;
+  setBackgroundImage: (img: string | null) => void;
   refreshModels: () => Promise<void>;
   isConfigured: () => boolean;
   fetchingModels: boolean;
@@ -23,6 +24,7 @@ export const useSettingsStore = create<SettingsStore>()(
       model: 'gpt-4o-mini',
       theme: 'light',
       models: [],
+      backgroundImage: null,
       fetchingModels: false,
       modelError: '',
 
@@ -38,6 +40,7 @@ export const useSettingsStore = create<SettingsStore>()(
         }
       },
       setModels: (models) => set({ models }),
+      setBackgroundImage: (backgroundImage) => set({ backgroundImage }),
       refreshModels: async () => {
         const { apiBaseUrl, apiKey } = get();
         if (!apiKey) return;
@@ -68,6 +71,7 @@ export const useSettingsStore = create<SettingsStore>()(
         model: state.model,
         theme: state.theme,
         models: state.models,
+        backgroundImage: state.backgroundImage,
       }),
     },
   ),
