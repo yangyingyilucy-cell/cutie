@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { MessageCircle, BookOpen, Settings, LogOut, MessageSquare } from 'lucide-react';
+import { MessageCircle, BookOpen, Settings, LogOut, MessageSquare, Bookmark } from 'lucide-react';
 import { useChatStore } from '../../stores/chatStore';
 import { useCharacterStore } from '../../stores/characterStore';
 
-export type PanelView = 'chat' | 'story' | 'settings';
+export type PanelView = 'chat' | 'story' | 'diary' | 'settings';
 
 export function Sidebar({
   active,
@@ -31,6 +31,7 @@ export function Sidebar({
   const items: { key: PanelView; icon: typeof MessageCircle; label: string }[] = [
     { key: 'chat', icon: MessageCircle, label: '聊天' },
     { key: 'story', icon: BookOpen, label: '故事' },
+    { key: 'diary', icon: Bookmark, label: '记忆' },
     { key: 'settings', icon: Settings, label: '设置' },
   ];
 

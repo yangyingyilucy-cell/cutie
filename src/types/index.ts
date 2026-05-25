@@ -73,3 +73,22 @@ export interface StoryOption {
   index: number;
   text: string;
 }
+
+export interface HighlightedRange {
+  start: number;
+  end: number;
+  text: string;
+}
+
+export interface DiaryEntry {
+  id: string;
+  date: string;
+  title: string;
+  content: string;
+  mood: string;
+  isImportant: boolean;
+  keywords: string[];
+  highlightedRanges: HighlightedRange[];
+  createdAt: number;
+  updatedAt: number;
+}

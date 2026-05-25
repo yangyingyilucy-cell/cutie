@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Sidebar, type PanelView } from './Sidebar';
 import { ChatView } from '../chat/ChatView';
 import { StoryView } from '../story/StoryView';
+import { DiaryView } from '../diary/DiaryView';
 import { SettingsPanel } from '../settings/SettingsPanel';
 import { PetFloating } from '../pet/PetFloating';
 import { useSettingsStore } from '../../stores/settingsStore';
@@ -39,6 +40,8 @@ export function Layout({ initialModule = 'chat' }: { initialModule?: 'chat' | 's
         return <ChatView onToggleSidebar={handleToggleSidebar} />;
       case 'story':
         return <StoryView onToggleSidebar={handleToggleSidebar} />;
+      case 'diary':
+        return <DiaryView />;
       case 'settings':
         return (
           <div className="flex flex-col h-full">

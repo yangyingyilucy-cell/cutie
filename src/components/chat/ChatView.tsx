@@ -3,6 +3,7 @@ import { useCharacterStore } from '../../stores/characterStore';
 import { useChatStore } from '../../stores/chatStore';
 import { useSettingsStore } from '../../stores/settingsStore';
 import { usePetStore } from '../../stores/petStore';
+import { useDiaryStore } from '../../stores/diaryStore';
 import { streamChat } from '../../services/api';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
@@ -17,6 +18,7 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   const settings = useSettingsStore();
   const chatStore = useChatStore();
   const { tick, grantExp } = usePetStore();
+  const diaryStore = useDiaryStore();
 
   const abortRef = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -67,6 +69,17 @@ export function ChatView({ onToggleSidebar }: { onToggleSidebar: () => void }) {
     const messages: ChatMessage[] = [
       { role: 'system' as const, content: systemMsg, id: 'system', timestamp: 0 },
     ];
+
+    // inject memory context
+    const memoryCtx = diaryStore.buildMemoryContext(trimmed);
+    if (memoryCtx) {
+      messages.push({
+        role: 'system' as const,
+        content: memoryCtx,
+        id: 'memory',
+        timestamp: 0,
+      });
+    }
 
     if (isFirst) {
       messages.push({
