@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import type { PetState } from '../types';
 
 const DEFAULT_PET: PetState = {
+  name: '伯恩山犬',
   health: 100,
   hunger: 100,
   cleanliness: 80,
@@ -25,6 +26,7 @@ interface PetStore {
   pet: PetState;
   panelOpen: boolean;
   setPanelOpen: (open: boolean) => void;
+  setPetName: (name: string) => void;
 
   tick: () => void;
   feed: () => boolean;
@@ -46,6 +48,7 @@ export const usePetStore = create<PetStore>()(
       panelOpen: false,
 
       setPanelOpen: (open) => set({ panelOpen: open }),
+      setPetName: (name) => set((s) => ({ pet: { ...s.pet, name } })),
 
       tick: () => {
         const { pet } = get();

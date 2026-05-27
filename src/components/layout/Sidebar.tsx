@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MessageCircle, BookOpen, Settings, LogOut, MessageSquare, Cloud } from 'lucide-react';
 import { useChatStore } from '../../stores/chatStore';
 import { useCharacterStore } from '../../stores/characterStore';
+import { useSettingsStore } from '../../stores/settingsStore';
 
 export type PanelView = 'chat' | 'story' | 'diary' | 'settings';
 
@@ -21,6 +22,8 @@ export function Sidebar({
   const [showConversations, setShowConversations] = useState(false);
   const chatStore = useChatStore();
   const characters = useCharacterStore((s) => s.characters);
+  const theme = useSettingsStore((s) => s.theme);
+  const isAcnh = theme === 'acnh';
 
   const activeCharId = chatStore.activeCharacterId;
 
@@ -45,31 +48,60 @@ export function Sidebar({
     if (isMobile) onClose();
   };
 
+  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
+
   const sidebarContent = (
     <div className="h-full flex flex-col gap-2 w-16">
       <div className="py-4 flex flex-col items-center gap-2">
-        {items.map(({ key, icon: Icon, label }) => (
-          <button
-            key={key}
-            onClick={() => handleSelect(key)}
-            className={`flex flex-col items-center gap-0.5 w-12 py-2 rounded-[12px] text-xs transition-all cursor-pointer ${
-              active === key
-                ? 'bg-[var(--color-accent)] text-white'
-                : 'opacity-50 hover:opacity-80 hover:bg-[var(--color-bg-light)] dark:hover:bg-[var(--color-bg-dark)]'
-            }`}
-            title={label}
-          >
-            <Icon size={20} />
-            <span className="text-[10px]">{label}</span>
-          </button>
-        ))}
+        {items.map(({ key, icon: Icon, label }) => {
+          const isActive = active === key;
+          const isHovered = hoveredKey === key;
+          return (
+            <button
+              key={key}
+              onClick={() => handleSelect(key)}
+              onMouseEnter={() => setHoveredKey(key)}
+              onMouseLeave={() => setHoveredKey(null)}
+              className={`flex flex-col items-center gap-0.5 w-12 py-2 rounded-[12px] text-xs transition-all duration-150 cursor-pointer`}
+              style={{
+                backgroundColor: isAcnh
+                  ? isActive
+                    ? '#B7C6E5'
+                    : isHovered
+                      ? '#d6dff0'
+                      : 'transparent'
+                  : isActive
+                    ? 'var(--color-accent)'
+                    : isHovered
+                      ? 'var(--color-bg-light)'
+                      : 'transparent',
+                color: isAcnh
+                  ? isActive
+                    ? '#fff'
+                    : '#8a7b66'
+                  : isActive
+                    ? '#fff'
+                    : undefined,
+                opacity: !isAcnh && !isActive ? 0.5 : undefined,
+              }}
+              title={label}
+            >
+              <Icon size={20} />
+              <span className="text-[10px]">{label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {active === 'chat' && (
-        <div className="flex-1 overflow-y-auto border-t border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] pt-2">
+        <div
+          className="flex-1 overflow-y-auto pt-2"
+          style={isAcnh ? { borderTop: '2px solid #d4c9b4' } : { borderTop: '1px solid var(--color-border-light)' }}
+        >
           <button
             onClick={() => setShowConversations(!showConversations)}
-            className="w-full flex flex-col items-center gap-0.5 py-2 rounded-[12px] text-xs opacity-50 hover:opacity-80 cursor-pointer"
+            className="w-full flex flex-col items-center gap-0.5 py-2 rounded-[12px] text-xs cursor-pointer"
+            style={{ opacity: 0.5 }}
           >
             <MessageSquare size={16} />
             <span className="text-[9px]">对话</span>
@@ -79,15 +111,18 @@ export function Sidebar({
               {conversations.map((conv) => {
                 const char = characters.find((c) => c.id === conv.characterId);
                 const preview = conv.messages.find((m) => m.role === 'user')?.content.slice(0, 15) || '新对话';
+                const isActive = conv.id === chatStore.activeConversationId;
                 return (
                   <button
                     key={conv.id}
                     onClick={() => handleSwitchConversation(conv.id)}
-                    className={`text-left p-1 rounded-[8px] text-[10px] cursor-pointer transition-colors ${
-                      conv.id === chatStore.activeConversationId
-                        ? 'bg-[var(--color-accent)] text-white'
-                        : 'hover:bg-[var(--color-bg-light)] dark:hover:bg-[var(--color-bg-dark)] opacity-60'
-                    }`}
+                    className={`text-left p-1 rounded-[8px] text-[10px] cursor-pointer transition-colors`}
+                    style={{
+                      backgroundColor: isActive
+                        ? isAcnh ? '#B7C6E5' : 'var(--color-accent)'
+                        : 'transparent',
+                      color: isActive ? '#fff' : isAcnh ? '#8a7b66' : undefined,
+                    }}
                     title={preview}
                   >
                     <div className="truncate">{char?.avatar} {preview}</div>
@@ -122,7 +157,22 @@ export function Sidebar({
           className="fixed inset-0 bg-black/30 z-40 md:hidden"
           onClick={onClose}
         />
-        <div className="fixed left-0 top-0 bottom-0 z-50 glass border-r border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] md:hidden">
+        <div
+          className="fixed left-0 top-0 bottom-0 z-50 md:hidden"
+          style={
+            isAcnh
+              ? {
+                  background: '#f8f8f0',
+                  borderRight: '2px solid #d4c9b4',
+                }
+              : {
+                  background: 'var(--color-glass-bg-light)',
+                  backdropFilter: 'blur(16px)',
+                  border: '1px solid var(--color-glass-border-light)',
+                  borderRight: '1px solid var(--color-border-light)',
+                }
+          }
+        >
           {sidebarContent}
         </div>
       </>
@@ -130,7 +180,20 @@ export function Sidebar({
   }
 
   return (
-    <div className="w-16 h-full border-r border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)]">
+    <div
+      className="w-16 h-full"
+      style={
+        isAcnh
+          ? {
+              background: '#f8f8f0',
+              borderRight: '2px solid #d4c9b4',
+            }
+          : {
+              borderRight: '1px solid var(--color-border-light)',
+              background: 'var(--color-card-light)',
+            }
+      }
+    >
       {sidebarContent}
     </div>
   );

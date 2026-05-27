@@ -7,7 +7,7 @@ interface SettingsStore extends Settings {
   setApiKey: (key: string) => void;
   setApiBaseUrl: (url: string) => void;
   setModel: (model: string) => void;
-  setTheme: (theme: 'light' | 'dark') => void;
+  setTheme: (theme: 'light' | 'dark' | 'acnh') => void;
   setModels: (models: ModelInfo[]) => void;
   setBackgroundImage: (img: string | null) => void;
   refreshModels: () => Promise<void>;

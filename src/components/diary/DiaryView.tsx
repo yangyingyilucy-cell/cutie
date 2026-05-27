@@ -69,7 +69,7 @@ export function DiaryView({ onToggleSidebar }: { onToggleSidebar: () => void }) 
         >
           <ChevronLeft size={22} />
         </button>
-        <span className="font-semibold text-base" style={{ fontFamily: "'ZCOOL KuaiLe', cursive" }}>
+        <span className="font-semibold text-base">
           {year}年 {month + 1}月
         </span>
         <button
@@ -114,7 +114,7 @@ export function DiaryView({ onToggleSidebar }: { onToggleSidebar: () => void }) 
                 }
                 ${isToday && !isSelected ? 'ring-1 ring-[var(--color-accent)]/40' : ''}
               `}
-              style={{ fontFamily: "'ZCOOL KuaiLe', cursive", aspectRatio: '1' }}
+              style={{ aspectRatio: '1' }}
             >
               <span className={`text-sm md:text-base leading-none ${isToday && !isSelected ? 'text-[var(--color-accent)] font-bold' : ''}`}>
                 {d}
@@ -151,7 +151,7 @@ export function DiaryView({ onToggleSidebar }: { onToggleSidebar: () => void }) 
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl">{selectedEntry.mood}</span>
-              <span className="font-medium text-base" style={{ fontFamily: "'ZCOOL KuaiLe', cursive" }}>
+              <span className="font-medium text-base">
                 {selectedEntry.title}
               </span>
               {selectedEntry.isImportant && (
@@ -163,7 +163,6 @@ export function DiaryView({ onToggleSidebar }: { onToggleSidebar: () => void }) 
 
             <p
               className="text-sm opacity-75 leading-relaxed whitespace-pre-wrap mb-4"
-              style={{ fontFamily: "'ZCOOL KuaiLe', cursive" }}
             >
               {selectedEntry.content}
             </p>
@@ -199,7 +198,7 @@ export function DiaryView({ onToggleSidebar }: { onToggleSidebar: () => void }) 
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-center opacity-40">
             <span className="text-3xl mb-2">📝</span>
-            <p className="text-sm" style={{ fontFamily: "'ZCOOL KuaiLe', cursive" }}>
+            <p className="text-sm">
               今天还没有记录哦~
             </p>
             <button

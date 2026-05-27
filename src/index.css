@@ -84,15 +84,12 @@ body.dark {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-accent);
-  border-radius: 3px;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: var(--color-accent-dark);
+  background: #9a835a;
+  border-radius: 4px;
 }

@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { Sidebar, type PanelView } from './Sidebar';
 import { Menu } from 'lucide-react';
 import { ChatView } from '../chat/ChatView';
+import { AcnhChatView } from '../chat/AcnhChatView';
 import { StoryView } from '../story/StoryView';
+import { AcnhStoryView } from '../story/AcnhStoryView';
 import { DiaryView } from '../diary/DiaryView';
+import { AcnhDiaryView } from '../diary/AcnhDiaryView';
 import { SettingsPanel } from '../settings/SettingsPanel';
-import { PetFloating } from '../pet/PetFloating';
+import { AcnhSettingsPanel } from '../settings/AcnhSettingsPanel';
 import { useSettingsStore } from '../../stores/settingsStore';
 
 function useIsMobile() {
@@ -38,12 +41,25 @@ export function Layout({ initialModule = 'chat' }: { initialModule?: PanelView }
   const renderPanel = () => {
     switch (activePanel) {
       case 'chat':
-        return <ChatView onToggleSidebar={handleToggleSidebar} />;
+        return theme === 'acnh'
+          ? <AcnhChatView />
+          : <ChatView onToggleSidebar={handleToggleSidebar} />;
       case 'story':
-        return <StoryView onToggleSidebar={handleToggleSidebar} />;
+        return theme === 'acnh'
+          ? <AcnhStoryView />
+          : <StoryView onToggleSidebar={handleToggleSidebar} />;
       case 'diary':
-        return <DiaryView onToggleSidebar={handleToggleSidebar} />;
+        return theme === 'acnh'
+          ? <AcnhDiaryView />
+          : <DiaryView onToggleSidebar={handleToggleSidebar} />;
       case 'settings':
+        if (theme === 'acnh') {
+          return (
+            <div style={{ height: '100%', background: '#f8f8f0', overflow: 'auto' }}>
+              <AcnhSettingsPanel />
+            </div>
+          );
+        }
         return (
           <div className="flex flex-col h-full">
             <div className="flex items-center gap-3 p-3 border-b border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
@@ -82,7 +98,6 @@ export function Layout({ initialModule = 'chat' }: { initialModule?: PanelView }
         />
       )}
       <div className="flex-1 flex flex-col overflow-hidden">{renderPanel()}</div>
-      <PetFloating />
     </div>
   );
 }

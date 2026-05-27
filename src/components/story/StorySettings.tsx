@@ -1,5 +1,6 @@
+import { useState } from 'react';
+import { Modal, Button, Input } from 'animal-island-ui';
 import type { Story } from '../../types';
-import { GlassButton } from '../ui/GlassCard';
 
 export function StorySettingsPanel({
   story,
@@ -10,100 +11,78 @@ export function StorySettingsPanel({
   onSave: (settings: { userCharacter: string; viewpoint: 'first' | 'third'; wordCount: number; outputFormat: string }) => void;
   onClose: () => void;
 }) {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const fd = new FormData(form);
-    onSave({
-      userCharacter: (fd.get('userCharacter') as string) || '',
-      viewpoint: (fd.get('viewpoint') as string) as 'first' | 'third',
-      wordCount: Number(fd.get('wordCount')) || 800,
-      outputFormat: (fd.get('outputFormat') as string) || '',
-    });
-    onClose();
+  const [userCharacter, setUserCharacter] = useState(story.userCharacter);
+  const [viewpoint, setViewpoint] = useState<'first' | 'third'>(story.viewpoint);
+  const [wordCount, setWordCount] = useState(story.wordCount);
+  const [outputFormat, setOutputFormat] = useState(story.outputFormat);
+
+  const handleOk = () => {
+    onSave({ userCharacter, viewpoint, wordCount, outputFormat });
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/30" onClick={onClose} />
-      <form
-        onSubmit={handleSubmit}
-        className="relative glass-card p-5 w-full max-w-sm max-h-[80vh] overflow-y-auto flex flex-col gap-3 z-10"
-      >
-        <h3 className="text-sm font-semibold opacity-70">故事设定</h3>
-
+    <Modal
+      open={true}
+      title="故事设定"
+      onClose={onClose}
+      onOk={handleOk}
+      typewriter={false}
+      width={600}
+      footer={
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+          <Button type="primary" danger onClick={onClose}>取消</Button>
+          <Button type="primary" onClick={handleOk} style={{ background: '#82d5bb', borderColor: '#6fbda3', color: '#fff', fontWeight: 700 }}>保存</Button>
+        </div>
+      }
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div>
-          <label className="text-xs opacity-60 mb-1 block">你的角色</label>
-          <input
-            name="userCharacter"
-            defaultValue={story.userCharacter}
+          <label style={{ fontSize: 13, color: '#9f927d', marginBottom: 6, display: 'block' }}>你的角色</label>
+          <Input
+            style={{ width: '100%' }}
             placeholder="你在故事中的身份（如旁观者、邻家少年）"
-            className="w-full bg-[var(--color-bg-light)] dark:bg-[var(--color-bg-dark)] border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] rounded-[12px] px-3 py-2 text-sm outline-none focus:border-[var(--color-accent)] transition-colors"
+            value={userCharacter}
+            onChange={(e: any) => setUserCharacter(e.target.value)}
           />
         </div>
 
         <div>
-          <label className="text-xs opacity-60 mb-1 block">叙事视角</label>
-          <div className="flex gap-2">
-            <label className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-[12px] text-sm cursor-pointer transition-all ${
-              story.viewpoint === 'first'
-                ? 'bg-[var(--color-accent)] text-white'
-                : 'glass-card hover:bg-[var(--color-bg-light)] dark:hover:bg-[var(--color-bg-dark)]'
-            }`}>
-              <input
-                type="radio"
-                name="viewpoint"
-                value="first"
-                defaultChecked={story.viewpoint === 'first'}
-                className="sr-only"
-              />
-              第一人称
-            </label>
-            <label className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-[12px] text-sm cursor-pointer transition-all ${
-              story.viewpoint === 'third'
-                ? 'bg-[var(--color-accent)] text-white'
-                : 'glass-card hover:bg-[var(--color-bg-light)] dark:hover:bg-[var(--color-bg-dark)]'
-            }`}>
-              <input
-                type="radio"
-                name="viewpoint"
-                value="third"
-                defaultChecked={story.viewpoint === 'third'}
-                className="sr-only"
-              />
-              第三人称
-            </label>
+          <label style={{ fontSize: 13, color: '#9f927d', marginBottom: 6, display: 'block' }}>叙事视角</label>
+          <div style={{ display: 'flex', gap: 8 }}>
+            {(['first', 'third'] as const).map((v) => (
+              <div
+                key={v}
+                onClick={() => setViewpoint(v)}
+                style={{
+                  flex: 1, textAlign: 'center', padding: '8px 16px', borderRadius: 50, cursor: 'pointer', fontSize: 13,
+                  background: viewpoint === v ? '#19c8b9' : 'rgb(247,243,223)',
+                  color: viewpoint === v ? '#fff' : '#725d42',
+                  border: viewpoint === v ? '2px solid #11a89b' : '2px solid #c4b89e',
+                }}
+              >{v === 'first' ? '第一人称' : '第三人称'}</div>
+            ))}
           </div>
         </div>
 
         <div>
-          <label className="text-xs opacity-60 mb-1 block">每章目标字数</label>
-          <input
-            type="number"
-            name="wordCount"
-            defaultValue={story.wordCount}
-            min={200}
-            max={10000}
-            step={100}
-            className="w-full bg-[var(--color-bg-light)] dark:bg-[var(--color-bg-dark)] border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] rounded-[12px] px-3 py-2 text-sm outline-none focus:border-[var(--color-accent)] transition-colors"
+          <label style={{ fontSize: 13, color: '#9f927d', marginBottom: 6, display: 'block' }}>每章目标字数</label>
+          <Input
+            style={{ width: '100%' }}
+            value={String(wordCount)}
+            onChange={(e: any) => setWordCount(Number(e.target.value) || 1000)}
           />
         </div>
 
         <div>
-          <label className="text-xs opacity-60 mb-1 block">输出格式</label>
-          <input
-            name="outputFormat"
-            defaultValue={story.outputFormat}
+          <label style={{ fontSize: 13, color: '#9f927d', marginBottom: 6, display: 'block' }}>输出格式</label>
+          <Input
+            style={{ width: '100%' }}
             placeholder="如：纯叙述、对话为主、散文风格"
-            className="w-full bg-[var(--color-bg-light)] dark:bg-[var(--color-bg-dark)] border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] rounded-[12px] px-3 py-2 text-sm outline-none focus:border-[var(--color-accent)] transition-colors"
+            value={outputFormat}
+            onChange={(e: any) => setOutputFormat(e.target.value)}
           />
         </div>
-
-        <div className="flex gap-2">
-          <GlassButton type="submit">保存</GlassButton>
-          <GlassButton variant="ghost" onClick={onClose}>取消</GlassButton>
-        </div>
-      </form>
-    </div>
+      </div>
+    </Modal>
   );
 }

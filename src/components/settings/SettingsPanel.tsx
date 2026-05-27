@@ -4,7 +4,7 @@ import { useChatStore } from '../../stores/chatStore';
 import { useStoryStore } from '../../stores/storyStore';
 import { usePetStore } from '../../stores/petStore';
 import { GlassCard, GlassButton } from '../ui/GlassCard';
-import { Eye, EyeOff, RefreshCw, Sun, Moon, Trash2, Loader2, Upload, X } from 'lucide-react';
+import { Eye, EyeOff, RefreshCw, Sun, Moon, Trash2, Loader2, Upload, X, Leaf } from 'lucide-react';
 
 export function SettingsPanel() {
   const {
@@ -171,6 +171,16 @@ export function SettingsPanel() {
             }`}
           >
             <Moon size={16} /> 深色
+          </button>
+          <button
+            onClick={() => setTheme('acnh')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-[12px] text-sm transition-all ${
+              theme === 'acnh'
+                ? 'bg-[#19c8b9] text-white'
+                : 'glass-card hover:bg-[var(--color-border-light)]'
+            }`}
+          >
+            <Leaf size={16} /> 动物森友会
           </button>
         </div>
       </GlassCard>

@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { usePetStore } from '../../stores/petStore';
+import { useSettingsStore } from '../../stores/settingsStore';
 import { PetPanel } from './PetPanel';
 
 function getInitialPosition() {
@@ -11,6 +12,8 @@ function getInitialPosition() {
 
 export function PetFloating() {
   const { pet, panelOpen, setPanelOpen, tick, getPetStage } = usePetStore();
+  const theme = useSettingsStore((s) => s.theme);
+  const isAcnh = theme === 'acnh';
   const [position, setPosition] = useState(() => {
     const saved = sessionStorage.getItem('pet-position');
     return saved ? JSON.parse(saved) : getInitialPosition();
@@ -121,8 +124,11 @@ export function PetFloating() {
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
         onClick={handleClick}
-        className="fixed z-40 w-12 h-12 md:w-14 md:h-14 rounded-full pet-gradient text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 cursor-grab active:cursor-grabbing select-none"
+        className={`fixed z-40 w-12 h-12 md:w-14 md:h-14 rounded-full text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 cursor-grab active:cursor-grabbing select-none ${
+          isAcnh ? '' : 'pet-gradient'
+        }`}
         style={{
+          ...(isAcnh ? { background: '#19c8b9' } : {}),
           left: `${position.x}px`,
           top: `${position.y}px`,
         }}

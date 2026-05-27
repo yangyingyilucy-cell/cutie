@@ -1,5 +1,4 @@
 import { MessagesSquare, BookOpen, Cloud, Settings } from 'lucide-react';
-import { PetFloating } from '../pet/PetFloating';
 import type { PanelView } from './Sidebar';
 
 export function HomePage({ onEnter }: { onEnter: (module: PanelView) => void }) {
@@ -40,8 +39,6 @@ export function HomePage({ onEnter }: { onEnter: (module: PanelView) => void }) 
           <span className="text-xs md:text-sm font-medium opacity-70 group-hover:opacity-100">设置</span>
         </button>
       </div>
-
-      <PetFloating />
     </div>
   );
 }

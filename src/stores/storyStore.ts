@@ -51,7 +51,7 @@ export const useStoryStore = create<StoryStore>()(
           writingStyle,
           userCharacter: '',
           viewpoint: 'third',
-          wordCount: 800,
+          wordCount: 1000,
           outputFormat: '',
           chapters: [],
           createdAt: Date.now(),

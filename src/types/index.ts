@@ -30,7 +30,7 @@ export interface Settings {
   apiKey: string;
   apiBaseUrl: string;
   model: string;
-  theme: 'light' | 'dark';
+  theme: 'light' | 'dark' | 'acnh';
   models: ModelInfo[];
   backgroundImage: string | null;
 }
@@ -58,6 +58,7 @@ export interface Story {
 }
 
 export interface PetState {
+  name: string;
   health: number;
   hunger: number;
   cleanliness: number;
