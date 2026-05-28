@@ -68,7 +68,7 @@ export function AcnhSettingsPanel() {
               style={{
                 padding: '14px 28px', borderRadius: 50, cursor: 'pointer', fontSize: 14,
                 background: theme === t.key ? '#19c8b9' : 'rgb(247,243,223)',
-                color: theme === t.key ? '#fff' : '#725d42',
+                color: theme === t.key ? '#fff' : '#76665b',
                 border: theme === t.key ? '2.5px solid #11a89b' : '2.5px solid #c4b89e',
                 transition: 'all 0.2s',
                 textAlign: 'center',
@@ -84,7 +84,7 @@ export function AcnhSettingsPanel() {
       {/* 数据管理 */}
       <Card color="app-red">
         <h3 style={{ fontSize: 18, fontWeight: 700, color: '#fff', marginBottom: 16 }}>数据管理</h3>
-        <p style={{ fontSize: 13, opacity: 0.8, marginBottom: 12 }}>清除所有本地存储的数据，包括聊天记录、故事、日志和宠物状态。此操作不可撤销。</p>
+        <p style={{ fontSize: 13, opacity: 0.8, marginBottom: 12 }}>清除所有本地存储的数据，包括聊天记录、故事、记忆。此操作不可撤销。</p>
           <Button type="dashed" danger block onClick={() => setShowClearModal(true)}>🗑 清除所有本地数据</Button>
       </Card>
 

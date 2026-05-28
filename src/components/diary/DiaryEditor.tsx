@@ -64,7 +64,7 @@ export function DiaryEditor({
       <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: '#f8f8f0' }}>
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 20px', borderBottom: '2px solid #d4c9b4' }}>
-          <button onClick={onClose} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#8a7b66', padding: 4 }}>
+          <button onClick={onClose} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#76665b', padding: 4 }}>
             <ArrowLeft size={20} />
           </button>
           <span style={{ fontSize: 18, fontWeight: 700, color: '#794f27' }}>
@@ -103,7 +103,7 @@ export function DiaryEditor({
               placeholder="给今天起个名字吧~"
               style={{
                 width: '100%', padding: '12px 18px', borderRadius: 50, border: '2.5px solid #c4b89e',
-                background: 'rgb(247,243,223)', fontSize: 15, color: '#725d42', outline: 'none',
+                background: 'rgb(247,243,223)', fontSize: 15, color: '#76665b', outline: 'none',
                 boxSizing: 'border-box',
               }}
               onFocus={(e) => { e.target.style.borderColor = '#ffcc00'; }}
@@ -121,7 +121,7 @@ export function DiaryEditor({
               <button
                 onClick={handleHighlight}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#8a7b66',
+                  display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#76665b',
                   border: 'none', background: 'none', cursor: 'pointer', padding: '4px 8px', borderRadius: 8,
                 }}
               >
@@ -136,10 +136,10 @@ export function DiaryEditor({
               rows={10}
               style={{
                 width: '100%', padding: '14px 18px', borderRadius: 20, border: '2.5px solid #c4b89e',
-                background: 'rgb(247,243,223)', fontSize: 15, color: '#725d42', outline: 'none',
+                background: 'rgb(247,243,223)', fontSize: 15, color: '#76665b', outline: 'none',
                 resize: 'vertical', boxSizing: 'border-box', lineHeight: 1.7, fontFamily: 'inherit',
               }}
-              onFocus={(e) => { e.target.style.borderColor = '#ffcc00'; }}
+              onFocus={(e) => { e.target.style.borderColor = '#fec844'; }}
               onBlur={(e) => { e.target.style.borderColor = '#c4b89e'; }}
             />
 
@@ -151,7 +151,7 @@ export function DiaryEditor({
                     onClick={() => setHighlights(highlights.filter((_, j) => j !== i))}
                     style={{
                       fontSize: 11, padding: '4px 10px', borderRadius: 50, cursor: 'pointer',
-                      background: '#e6f9f6', color: '#11a89b',
+                      background: '#e6f9f6', color: '#59bca8',
                     }}
                   >✕ {h.text.slice(0, 15)}</span>
                 ))}
@@ -165,9 +165,9 @@ export function DiaryEditor({
               type="checkbox"
               checked={isImportant}
               onChange={(e) => setIsImportant(e.target.checked)}
-              style={{ accentColor: '#19c8b9', width: 18, height: 18 }}
+              style={{ accentColor: '#59bca8', width: 18, height: 18 }}
             />
-            <span style={{ fontSize: 14, color: '#725d42' }}>
+            <span style={{ fontSize: 14, color: '#76665b' }}>
               重要日志（勾选后，AI聊天每次都会读取此日志）
             </span>
           </label>
@@ -175,17 +175,15 @@ export function DiaryEditor({
           {/* Privacy notice */}
           <div style={{
             padding: 16, borderRadius: 20, background: '#e6f9f6',
-            fontSize: 13, color: '#11a89b', lineHeight: 1.6, marginBottom: 20,
+            fontSize: 13, color: '#59bca8', lineHeight: 1.6, marginBottom: 20,
           }}>
             <div style={{ fontWeight: 700, marginBottom: 6, color: '#794f27' }}>🔒 隐私提醒</div>
-            <div>你在聊天时，AI 会读取与本日志相关的记忆。</div>
-            <div>重要日志会被全部读取，普通日志通过关键词匹配读取。</div>
-            <div>请勿记录敏感个人信息（密码、身份证、银行卡等）。</div>
+            <div>你在聊天时，AI 会读取与本日志相关的记忆，请勿记录敏感个人信息（密码、身份证、银行卡等）。</div>
           </div>
 
           {/* Buttons */}
           <div style={{ display: 'flex', gap: 12, paddingBottom: 24 }}>
-            <Button type="primary" onClick={handleSave} disabled={!title.trim() || !content.trim()} style={{ background: '#82d5bb', borderColor: '#6fbda3', color: '#fff', fontWeight: 700 }}>
+            <Button type="primary" onClick={handleSave} disabled={!title.trim() || !content.trim()} style={{ background: '#59bca8', borderColor: '#6fbda3', color: '#fff', fontWeight: 700 }}>
               保存
             </Button>
             <Button type="primary" danger onClick={onClose}>

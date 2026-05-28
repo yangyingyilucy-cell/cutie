@@ -57,7 +57,7 @@ export function AcnhDiaryView() {
     <Cursor>
       <div style={{
         height: '100vh', display: 'flex', flexDirection: 'column',
-        background: '#f8f8f0',
+        background: '#efe3cc',
         backgroundImage: 'linear-gradient(180deg, rgba(125,195,149,0.08) 0%, rgba(125,195,149,0.02) 50%, rgba(125,195,149,0.06) 100%)',
       }}>
         {/* Header */}
@@ -71,11 +71,11 @@ export function AcnhDiaryView() {
           <div style={{ flex: '5', padding: 16, display: 'flex', flexDirection: 'column' }}>
             {/* Month nav */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-              <button onClick={() => setCurrentDate(new Date(year, month - 1))} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#8a7b66', fontSize: 20 }}>
+              <button onClick={() => setCurrentDate(new Date(year, month - 1))} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#76665b', fontSize: 20 }}>
                 <ChevronLeft size={22} />
               </button>
               <span style={{ fontSize: 18, fontWeight: 800, color: '#794f27' }}>{year}年 {month + 1}月</span>
-              <button onClick={() => setCurrentDate(new Date(year, month + 1))} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#8a7b66', fontSize: 20 }}>
+              <button onClick={() => setCurrentDate(new Date(year, month + 1))} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#76665b', fontSize: 20 }}>
                 <ChevronRight size={22} />
               </button>
             </div>
@@ -85,7 +85,7 @@ export function AcnhDiaryView() {
               {WEEKDAYS.map((w, i) => (
                 <div key={w} style={{
                   textAlign: 'center', fontSize: 12, fontWeight: 600,
-                  color: i === 0 || i === 6 ? '#6fba2c' : '#a0936e',
+                  color: i === 0 || i === 6 ? '#eb4762' : '#a0936e',
                   padding: '4px 0',
                 }}>{w}</div>
               ))}
@@ -109,7 +109,7 @@ export function AcnhDiaryView() {
                       aspectRatio: '1', borderRadius: 16, border: 'none', cursor: 'pointer',
                       fontSize: 15, fontWeight: isToday ? 800 : 600,
                       background: isSelected ? '#19c8b9' : 'rgb(247,243,223)',
-                      color: isSelected ? '#fff' : isToday ? '#11a89b' : '#725d42',
+                      color: isSelected ? '#fff' : isToday ? '#11a89b' : '#76665b',
                       boxShadow: isSelected ? '0 3px 0 0 #11a89b' : '0 2px 0 0 #d4c9b4',
                       transition: 'all 0.15s',
                       position: 'relative',
@@ -127,14 +127,14 @@ export function AcnhDiaryView() {
             </div>
           </div>
 
-          {/* Right: Log detail */}
-          <div style={{ flex: '4', borderLeft: '2px solid #d4c9b4', padding: 16, display: 'flex', flexDirection: 'column' }}>
+          {/* Right: Log detail with scrollable content */}
+          <div style={{ flex: '4', borderLeft: '2px solid #d4c9b4', padding: 16, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             <div style={{ fontSize: 13, color: '#9f927d', marginBottom: 12 }}>
               📅 {selectedDate}
             </div>
 
             {selectedEntry ? (
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
                   <span style={{ fontSize: 28 }}>{selectedEntry.mood}</span>
                   <div>
@@ -145,14 +145,17 @@ export function AcnhDiaryView() {
                   </div>
                 </div>
 
-                <Card color="default">
-                  <div style={{ fontSize: 15, lineHeight: 1.8, color: '#725d42', whiteSpace: 'pre-wrap' }}>
-                    {selectedEntry.content}
-                  </div>
-                </Card>
+                {/* Scrollable content area */}
+                <div style={{ flex: 1, overflowY: 'auto', marginBottom: 12 }}>
+                  <Card color="default">
+                    <div style={{ fontSize: 15, lineHeight: 1.8, color: '#76665b', whiteSpace: 'pre-wrap' }}>
+                      {selectedEntry.content}
+                    </div>
+                  </Card>
+                </div>
 
                 {selectedEntry.keywords.length > 0 && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 12 }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
                     {selectedEntry.keywords.map((kw) => (
                       <span key={kw} style={{
                         fontSize: 12, padding: '4px 12px', borderRadius: 50,
@@ -162,7 +165,7 @@ export function AcnhDiaryView() {
                   </div>
                 )}
 
-                <div style={{ marginTop: 'auto', display: 'flex', gap: 8, paddingTop: 16 }}>
+                <div style={{ display: 'flex', gap: 8, paddingTop: 16, borderTop: '1px solid #e4d9c6', marginTop: 'auto' }}>
                   <Button onClick={handleEdit}><Edit3 size={14} /> 编辑</Button>
                   <Button danger onClick={handleDelete}><Trash2 size={14} /> 删除</Button>
                 </div>

@@ -168,7 +168,7 @@ export function AcnhChatView() {
                   style={{ maxWidth: '75%' }}
                 >
                   <div
-                    style={{ fontSize: 14, color: '#725d42' }}
+                    style={{ fontSize: 14, color: '#76665b' }}
                     dangerouslySetInnerHTML={{ __html: formatContent(msg.content) }}
                   />
                 </Card>
@@ -177,7 +177,7 @@ export function AcnhChatView() {
           {chatStore.isStreaming && chatStore.streamContent && (
             <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 12 }}>
               <Card color="default" style={{ maxWidth: '75%' }}>
-                <div style={{ fontSize: 14, color: '#725d42' }}>
+                <div style={{ fontSize: 14, color: '#76665b' }}>
                   <span dangerouslySetInnerHTML={{ __html: formatContent(chatStore.streamContent) }} />
                   <span
                     style={{
@@ -228,7 +228,7 @@ export function AcnhChatView() {
               type="primary"
               onClick={handleSend}
               disabled={!inputValue.trim()}
-              style={{ background: '#82d5bb', borderColor: '#6fbda3', color: '#fff', fontWeight: 700 }}
+              style={{ background: '#075762', borderColor: '#075762', color: '#fff', fontWeight: 700 }}
             >
               发送
             </Button>

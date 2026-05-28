@@ -180,7 +180,7 @@ export function AcnhStoryView() {
                     onClick={() => handleStyleChange(style.id)}
                     style={{
                       padding: '6px 12px', cursor: 'pointer', borderRadius: 8, fontSize: 13,
-                      color: activeStory.writingStyle === style.id ? '#19c8b9' : '#725d42',
+                      color: activeStory.writingStyle === style.id ? '#19c8b9' : '#76665b',
                       fontWeight: activeStory.writingStyle === style.id ? 700 : 500,
                     }}
                   >{style.icon} {style.name}</div>

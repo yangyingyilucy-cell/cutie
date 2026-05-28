@@ -66,7 +66,7 @@ export function Sidebar({
               style={{
                 backgroundColor: isAcnh
                   ? isActive
-                    ? '#B7C6E5'
+                    ? '#57bca8'
                     : isHovered
                       ? '#d6dff0'
                       : 'transparent'
@@ -78,7 +78,7 @@ export function Sidebar({
                 color: isAcnh
                   ? isActive
                     ? '#fff'
-                    : '#8a7b66'
+                    : '#76665b'
                   : isActive
                     ? '#fff'
                     : undefined,
@@ -119,9 +119,9 @@ export function Sidebar({
                     className={`text-left p-1 rounded-[8px] text-[10px] cursor-pointer transition-colors`}
                     style={{
                       backgroundColor: isActive
-                        ? isAcnh ? '#B7C6E5' : 'var(--color-accent)'
+                        ? isAcnh ? '#9fd3c8' : 'var(--color-accent)'
                         : 'transparent',
-                      color: isActive ? '#fff' : isAcnh ? '#8a7b66' : undefined,
+                      color: isActive ? '#fff' : isAcnh ? '#76665b' : undefined,
                     }}
                     title={preview}
                   >

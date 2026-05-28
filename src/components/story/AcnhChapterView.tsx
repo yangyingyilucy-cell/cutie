@@ -35,7 +35,7 @@ export function AcnhChapterView({
           </h3>
           <Card color="default">
             <div
-              style={{ fontSize: 15, lineHeight: 1.8, color: '#725d42' }}
+              style={{ fontSize: 15, lineHeight: 1.8, color: '#76665b' }}
               dangerouslySetInnerHTML={{ __html: formatContent(ch.content) }}
             />
           </Card>
@@ -53,7 +53,7 @@ export function AcnhChapterView({
             第 {story.chapters.length + 1} 章 (生成中...)
           </h3>
           <Card color="default">
-            <div style={{ fontSize: 15, lineHeight: 1.8, color: '#725d42' }}>
+            <div style={{ fontSize: 15, lineHeight: 1.8, color: '#76665b' }}>
               <span dangerouslySetInnerHTML={{ __html: formatContent(streamContent) }} />
               <span style={{ display: 'inline-block', width: 2, height: 18, background: '#19c8b9', marginLeft: 2 }} />
             </div>
@@ -63,14 +63,14 @@ export function AcnhChapterView({
 
       {options.length >= 2 && !isGenerating && (
         <Card color="app-yellow" style={{ marginBottom: 16 }}>
-          <h4 style={{ fontSize: 14, fontWeight: 700, color: '#725d42', marginBottom: 12 }}>选择下一步</h4>
+          <h4 style={{ fontSize: 14, fontWeight: 700, color: '#76665b', marginBottom: 12 }}>选择下一步</h4>
           {options.map((opt) => (
             <div
               key={opt.index}
               onClick={() => onSelectOption(opt.text)}
               style={{
                 padding: '10px 14px', marginBottom: 8, borderRadius: 12, cursor: 'pointer',
-                border: '2px solid #d4c9b4', fontSize: 14, color: '#725d42',
+                border: '2px solid #d4c9b4', fontSize: 14, color: '#76665b',
                 background: 'rgb(247,243,223)',
               }}
             >
@@ -93,7 +93,7 @@ export function AcnhChapterView({
               onKeyDown={(e: any) => { if (e.key === 'Enter' && userInput.trim()) onCustomInput(userInput); }}
             />
           </div>
-          <Button type="primary" onClick={() => userInput.trim() && onCustomInput(userInput)} disabled={!userInput.trim()} style={{ background: '#82d5bb', borderColor: '#6fbda3', color: '#fff', fontWeight: 700 }}>
+          <Button type="primary" onClick={() => userInput.trim() && onCustomInput(userInput)} disabled={!userInput.trim()} style={{ background: '#075762', borderColor: '#075762', color: '#fff', fontWeight: 700 }}>
             续写
           </Button>
         </div>
